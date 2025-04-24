@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Profile - Attachment Testimony Hub{% endblock %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2>Profile</h2>
+            <p><strong>Full Name:</strong> {{ user.full_name }}</p>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+                </div>
+                <button type="submit" name="update" class="btn btn-primary">Update Profile</button>
+                <button type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Are you sure?');">Delete Account</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

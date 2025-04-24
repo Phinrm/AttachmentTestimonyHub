@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Manage Users - Attachment Testimony Hub{% endblock %}
+{% block content %}
+    <h2>Manage Users</h2>
+    <h3>Add User</h3>
+    <form method="POST" class="row g-3">
+        <input type="hidden" name="add" value="1">
+        <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="full_name" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Age</label>
+            <input type="number" name="age" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">DOB</label>
+            <input type="date" name="dob" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Course</label>
+            <input type="text" name="course" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Year</label>
+            <input type="text" name="year" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">University</label>
+            <input type="text" name="university" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+    <h3 class="mt-5">All Users</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr><th>ID</th><th>Full Name</th><th>Email</th><th>Username</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user[0] }}</td><td>{{ user[1] }}</td><td>{{ user[2] }}</td><td>{{ user[3] }}</td>
+                        <td>
+                            <form method="POST" class="row g-2">
+                                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                                <input type="hidden" name="modify" value="1">
+                                <div class="col-auto">
+                                    <input type="text" name="full_name" value="{{ user[1] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="number" name="age" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" name="dob" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="course" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="year" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="email" name="email" value="{{ user[2] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="university" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="username" value="{{ user[3] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary btn-sm">Modify</button>
+                                </div>
+                            </form>
+                            <form method="POST" class="d-inline">
+                                <input type="hidden" name="user_id" value="{{ user[0] }}">
+                                <input type="hidden" name="delete" value="1">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

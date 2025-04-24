@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - Attachment Testimony Hub{% endblock %}
+{% block content %}
+    <h2>Admin Dashboard</h2>
+    <div class="d-flex flex-wrap gap-3 mb-4">
+        <a href="{{ url_for('manage_users') }}" class="btn btn-primary">Manage Users</a>
+        <a href="{{ url_for('manage_testimonies') }}" class="btn btn-primary">Manage Testimonies</a>
+    </div>
+    <h3>Download Reports</h3>
+    <div class="d-flex flex-wrap gap-3">
+        <a href="{{ url_for('download_users') }}" class="btn btn-success">Download Users (CSV)</a>
+        <a href="{{ url_for('download_testimonies') }}" class="btn btn-success">Download Testimonies (CSV)</a>
+        <a href="{{ url_for('download_logs') }}" class="btn btn-success">Download Logs (CSV)</a>
+        <a href="{{ url_for('download_all') }}" class="btn btn-success">Download All Data (CSV)</a>
+    </div>
+{% endblock %}

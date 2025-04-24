@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Manage Testimonies - Attachment Testimony Hub{% endblock %}
+{% block content %}
+    <h2>Manage Testimonies</h2>
+    <h3>Add Testimony</h3>
+    <form method="POST" class="row g-3">
+        <input type="hidden" name="add" value="1">
+        <div class="col-md-6">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" name="full_name" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Company</label>
+            <input type="text" name="company" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Company Email</label>
+            <input type="email" name="company_email" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">University</label>
+            <input type="text" name="university" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Start Date</label>
+            <input type="date" name="start_date" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">End Date</label>
+            <input type="date" name="end_date" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Department</label>
+            <input type="text" name="department" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Rating</label>
+            <input type="number" name="rating" min="1" max="5" class="form-control" required>
+        </div>
+        <div class="col-12">
+            <label class="form-label">Notes</label>
+            <textarea name="notes" class="form-control" required></textarea>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+    <h3 class="mt-5">All Testimonies</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr><th>ID</th><th>Username</th><th>Company</th><th>Rating</th><th>Notes</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for t in testimonies %}
+                    <tr>
+                        <td>{{ t[0] }}</td><td>{{ t[1] }}</td><td>{{ t[3] }}</td><td>{{ t[9] }}</td><td>{{ t[10] }}</td>
+                        <td>
+                            <form method="POST" class="row g-2">
+                                <input type="hidden" name="testimony_id" value="{{ t[0] }}">
+                                <input type="hidden" name="modify" value="1">
+                                <div class="col-auto">
+                                    <input type="text" name="username" value="{{ t[1] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="full_name" value="{{ t[2] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="company" value="{{ t[3] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="email" name="company_email" value="{{ t[4] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="university" value="{{ t[5] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" name="start_date" value="{{ t[6] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" name="end_date" value="{{ t[7] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" name="department" value="{{ t[8] }}" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="number" name="rating" value="{{ t[9] }}" min="1" max="5" class="form-control" required>
+                                </div>
+                                <div class="col-auto">
+                                    <textarea name="notes" class="form-control" required>{{ t[10] }}</textarea>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary btn-sm">Modify</button>
+                                </div>
+                            </form>
+                            <form method="POST" class="d-inline">
+                                <input type="hidden" name="testimony_id" value="{{ t[0] }}">
+                                <input type="hidden" name="delete" value="1">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

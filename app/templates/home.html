@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Home - Attachment Testimony Hub{% endblock %}
+{% block content %}
+    <div class="text-center my-5">
+        <h1>Share Your Attachment Experience</h1>
+        <p>Welcome to AttachMate, your ultimate guide to finding the perfect industrial attachment opportunity. Whether you're a student eager to kickstart your career or someone looking for honest insights into the best companies, we’ve got you covered. At AttachMate, we believe that real experiences matter, and that’s why we’ve created a platform where students like you can share their attachment testimonies, rate companies, and help each other make informed decisions.
+        </p>
+        <p>Why struggle with endless searches and guesswork when you can tap into the collective wisdom of thousands of students? With AttachMate, you’ll get access to firsthand accounts from peers who’ve been there and done that. Discover what it’s like to work at top companies, learn about the exciting projects, the supportive mentors, and even the challenges you might face. 
+        </p>
+        <p>But AttachMate isn’t just about reading, it’s about contributing too. Share your own attachment story and help future students navigate their journeys. Your voice matters, and together, we’re building a community that empowers students to choose wisely and thrive in their careers. Plus, our advanced recommendation system ensures you’re always one step ahead, suggesting placements tailored just for you.
+        </p>
+        <p>Whether you’re searching for a company that values innovation, offers hands-on experience, or provides a stepping stone to your dream job, AttachMate is here to guide you every step of the way. Join thousands of students who are already making smarter choices, gaining valuable insights, and shaping their futures. Remember, one testimony at a time.
+        </p>
+        <p>Your next big opportunity starts here. Dive into AttachMate today and take control of your industrial attachment journey!</p>
+
+        <img src="{{ url_for('static', filename='images/hub.jpeg') }}"  class="img-fluid mb-4" style="max-width: 600px; height: 200px;">
+        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started</a>
+        <a href="{{ url_for('testimonies') }}" class="btn btn-outline-primary btn-lg">View Testimonies</a>
+    </div>
+{% endblock %}

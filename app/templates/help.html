@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+{% block title %}Help - Attachment Testimony Hub{% endblock %}
+{% block content %}
+    <h2>Help</h2>
+    <h3>Frequently Asked Questions (FAQs)</h3>
+    <div class="accordion" id="faqAccordion">
+        <!-- General Usage -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                    What is Attachment Testimony Hub?
+                </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Attachment Testimony Hub is a platform for university students to share and explore industrial attachment (internship) experiences. You can view testimonies from others, and if registered, submit your own experiences to help guide future students. Admins manage the platform and generate reports.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                    Who can use the app?
+                </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Anyone can view testimonies without an account. Registered users (typically students) can submit testimonies and manage their profiles. Administrators have access to manage users, testimonies, and download reports.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                    How do I navigate the app?
+                </button>
+            </h2>
+            <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Use the top navigation bar to access the homepage, testimonies, login, register, or admin login. If logged in, a dropdown menu under your username provides access to your dashboard, profile, testimonies, help, and logout. Admins have a similar dropdown for admin-specific features.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                    Is the app mobile-friendly?
+                </button>
+            </h2>
+            <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Yes, the app is fully responsive and works on desktops, tablets, and smartphones, thanks to Bootstrap’s responsive design.
+                </div>
+            </div>
+        </div>
+        <!-- Public Users -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq5">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                    Can I view testimonies without registering?
+                </button>
+            </h2>
+            <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Yes, go to the “Testimonies” page from the navigation bar to view all testimonies. You can also use the search bar to filter by name, company, university, or notes.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq6">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                    Why can’t I submit a testimony?
+                </button>
+            </h2>
+            <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="faq6" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Only registered and logged-in users can submit testimonies. Click “Register” or “Login” in the navigation bar to create an account or sign in.
+                </div>
+            </div>
+        </div>
+        <!-- Registered Users -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq7">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                    How do I register for an account?
+                </button>
+            </h2>
+            <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="faq7" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Click “Register” in the navigation bar, fill in your details (full name, age, date of birth, course, year, email, university, username, password), and submit the form. You’ll be redirected to the login page after successful registration.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq8">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                    How do I log in?
+                </button>
+            </h2>
+            <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="faq8" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Click “Login” in the navigation bar, enter your username and password, and submit. If successful, you’ll be taken to your dashboard.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq9">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                    What if I forget my password?
+                </button>
+            </h2>
+            <div id="collapse9" class="accordion-collapse collapse" aria-labelledby="faq9" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    On the login page, click “Forgot Password,” enter your email, and submit. A temporary password (<code>temp123</code>) will be sent to your email (simulated in this version). Log in with the new password and update it in your profile.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq10">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
+                    How do I submit a testimony?
+                </button>
+            </h2>
+            <div id="collapse10" class="accordion-collapse collapse" aria-labelledby="faq10" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Log in, go to the “Testimonies” page, and fill out the form with your full name, company details, university, dates, department, rating (1–5), and notes. Click “Submit” to add your testimony.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq11">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse11" aria-expanded="false" aria-controls="collapse11">
+                    Can I edit or delete my testimony?
+                </button>
+            </h2>
+            <div id="collapse11" class="accordion-collapse collapse" aria-labelledby="faq11" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Currently, only administrators can edit or delete testimonies. Contact support (<a href="mailto:support@testimonyhub.com">support@testimonyhub.com</a>) to request changes to your testimony.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq12">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse12" aria-expanded="false" aria-controls="collapse12">
+                    How do I update my profile?
+                </button>
+            </h2>
+            <div id="collapse12" class="accordion-collapse collapse" aria-labelledby="faq12" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Log in, click your username in the navigation bar, select “Profile,” update your email address, and click “Update Profile.” You can also delete your account from this page.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq13">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse13" aria-expanded="false" aria-controls="collapse13">
+                    How do I use the chat assistant?
+                </button>
+            </h2>
+            <div id="collapse13" class="accordion-collapse collapse" aria-labelledby="faq13" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    On the Help page, type your question in the chat box and click “Send.” The assistant provides basic responses about testimonies and app usage. For complex issues, contact support.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq14">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse14" aria-expanded="false" aria-controls="collapse14">
+                    How do I log out?
+                </button>
+            </h2>
+            <div id="collapse14" class="accordion-collapse collapse" aria-labelledby="faq14" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Click your username in the navigation bar and select “Logout” from the dropdown menu.
+                </div>
+            </div>
+        </div>
+        <!-- Administrators -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq15">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse15" aria-expanded="false" aria-controls="collapse15">
+                    How do I access the admin section?
+                </button>
+            </h2>
+            <div id="collapse15" class="accordion-collapse collapse" aria-labelledby="faq15" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Click “Admin Login” in the navigation bar, enter the admin credentials (username: <code>admin</code>, password: <code>admin123</code>), and submit. You’ll be taken to the admin dashboard.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq16">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse16" aria-expanded="false" aria-controls="collapse16">
+                    What can I do as an admin?
+                </button>
+            </h2>
+            <div id="collapse16" class="accordion-collapse collapse" aria-labelledby="faq16" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    From the admin dashboard, you can manage users (add, modify, delete), manage testimonies (add, modify, delete), and download reports (users, testimonies, logs, or all data) as CSV files.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq17">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse17" aria-expanded="false" aria-controls="collapse17">
+                    How do I download reports?
+                </button>
+            </h2>
+            <div id="collapse17" class="accordion-collapse collapse" aria-labelledby="faq17" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Log in as an admin, go to the admin dashboard, and click the download buttons for “Users,” “Testimonies,” “Logs,” or “All Data.” Each generates a CSV file with a timestamped filename (e.g., <code>users_YYYYMMDD_HHMMSS.csv</code>).
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq18">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse18" aria-expanded="false" aria-controls="collapse18">
+                    How do I manage users or testimonies?
+                </button>
+            </h2>
+            <div id="collapse18" class="accordion-collapse collapse" aria-labelledby="faq18" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    From the admin dashboard, click “Manage Users” to add, modify, or delete user accounts, or “Manage Testimonies” to add, modify, or delete testimonies. Use the forms and tables provided to perform these actions.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq19">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse19" aria-expanded="false" aria-controls="collapse19">
+                    What are logs, and how do I view them?
+                </button>
+            </h2>
+            <div id="collapse19" class="accordion-collapse collapse" aria-labelledby="faq19" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Logs track user and admin actions (e.g., login, testimony submission, user deletion). Download the logs CSV from the admin dashboard to view details like username, action, and timestamp.
+                </div>
+            </div>
+        </div>
+        <!-- Troubleshooting -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq20">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse20" aria-expanded="false" aria-controls="collapse20">
+                    Why can’t I log in?
+                </button>
+            </h2>
+            <div id="collapse20" class="accordion-collapse collapse" aria-labelledby="faq20" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Ensure your username and password are correct. If you’ve forgotten your password, use the “Forgot Password” link. If issues persist, contact <a href="mailto:support@testimonyhub.com">support@testimonyhub.com</a>.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq21">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse21" aria-expanded="false" aria-controls="collapse21">
+                    Why isn’t my testimony submission working?
+                </button>
+            </h2>
+            <div id="collapse21" class="accordion-collapse collapse" aria-labelledby="faq21" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Ensure you’re logged in and all form fields are filled correctly (e.g., valid email, rating 1–5). If you see an error, note the message and contact <a href="mailto:support@testimonyhub.com">support@testimonyhub.com</a>.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq22">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse22" aria-expanded="false" aria-controls="collapse22">
+                    Why aren’t my downloaded reports opening?
+                </button>
+            </h2>
+            <div id="collapse22" class="accordion-collapse collapse" aria-labelledby="faq22" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Downloads are CSV files. Open them with software like Microsoft Excel, Google Sheets, or a text editor. Ensure your browser isn’t blocking downloads, and check your downloads folder.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq23">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse23" aria-expanded="false" aria-controls="collapse23">
+                    Why don’t I see images on the site?
+                </button>
+            </h2>
+            <div id="collapse23" class="accordion-collapse collapse" aria-labelledby="faq23" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    If images are missing, they may not have been added to the site’s image folder. Contact the site administrator at <a href="mailto:support@testimonyhub.com">support@testimonyhub.com</a> to ensure images (e.g., logo, hero image) are properly uploaded.
+                </div>
+            </div>
+        </div>
+        <!-- Security and Privacy -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq24">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse24" aria-expanded="false" aria-controls="collapse24">
+                    Is my data secure?
+                </button>
+            </h2>
+            <div id="collapse24" class="accordion-collapse collapse" aria-labelledby="faq24" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Your data is stored in a SQLite database. Passwords are currently stored as plaintext (not recommended for production). For enhanced security, contact the administrator to implement password hashing. Session data is managed securely with Flask’s session system.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq25">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse25" aria-expanded="false" aria-controls="collapse25">
+                    How can I delete my account?
+                </button>
+            </h2>
+            <div id="collapse25" class="accordion-collapse collapse" aria-labelledby="faq25" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Log in, go to your profile page, and click “Delete Account.” This removes your user data and associated testimonies.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq26">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse26" aria-expanded="false" aria-controls="collapse26">
+                    Who can see my testimonies?
+                </button>
+            </h2>
+            <div id="collapse26" class="accordion-collapse collapse" aria-labelledby="faq26" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Testimonies are publicly visible to all users (registered or not) on the “Testimonies” page. Only you and admins can associate testimonies with your username.
+                </div>
+            </div>
+        </div>
+        <!-- Support -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq27">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse27" aria-expanded="false" aria-controls="collapse27">
+                    How do I contact support?
+                </button>
+            </h2>
+            <div id="collapse27" class="accordion-collapse collapse" aria-labelledby="faq27" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Email <a href="mailto:support@testimonyhub.com">support@testimonyhub.com</a> for assistance with account issues, testimony changes, or technical problems. Include details like your username and the issue encountered.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq28">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse28" aria-expanded="false" aria-controls="collapse28">
+                    What should I do if I find a bug?
+                </button>
+            </h2>
+            <div id="collapse28" class="accordion-collapse collapse" aria-labelledby="faq28" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Report bugs to <a href="mailto:support@testimonyhub.com">support@testimonyhub.com</a>, describing the issue, steps to reproduce it, and any error messages. This helps the administrator fix problems quickly.
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3 class="mt-5">Chat Assistant</h3>
+    <div class="card">
+        <div class="card-body chat-box">
+            {% for sender, msg in chat_history %}
+                <p><strong>{{ sender }}:</strong> {{ msg }}</p>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+            <form method="POST" class="d-flex">
+                <input type="text" name="message" class="form-control me-2" placeholder="Ask a question..." required>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Attachment Testimony Hub{% endblock %}
+{% block content %}
+    <h2>Welcome, {{ user.full_name }}!</h2>
+    <p>Share and explore industrial attachment experiences.</p>
+    <div class="d-flex flex-wrap gap-3">
+        <a href="{{ url_for('profile') }}" class="btn btn-primary">Profile</a>
+        <a href="{{ url_for('testimonies') }}" class="btn btn-primary">Testimonies</a>
+        <a href="{{ url_for('help') }}" class="btn btn-primary">Help</a>
+    </div>
+{% endblock %}

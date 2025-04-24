@@ -1,0 +1,75 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand .logo-placeholder {
+    width: 100px;
+    height: 40px;
+    background-color: #ccc;
+    text-align: center;
+    line-height: 40px;
+}
+.logo-img {
+    height: 40px;
+}
+
+.img-fluid {
+    width: 100%;
+    height: auto;
+}
+
+.image-placeholder {
+    background-color: #ccc;
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.hero-placeholder {
+    width: 100%;
+    max-width: 600px;
+    height: 200px;
+    line-height: 200px;
+}
+
+.dashboard-placeholder, .admin-placeholder {
+    width: 100%;
+    max-width: 400px;
+    height: 150px;
+    line-height: 150px;
+}
+
+.alert {
+    margin-bottom: 20px;
+}
+
+main {
+    min-height: calc(100vh - 200px);
+}
+
+footer {
+    margin-top: auto;
+}
+
+.chat-box {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
