@@ -1,0 +1,103 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+    <div class="dashboard-header">
+        <h2>Company Dashboard</h2>
+        <p>Manage your profile, attachment vacancies, and job postings.</p>
+    </div>
+
+    <div class="company-status">
+        <h3>{{ company.name }}</h3>
+        <p>
+            <strong>Email Verification:</strong>
+            {% if company.email_verified %}
+                <span class="status-ok">Verified</span>
+            {% else %}
+                <span class="status-bad">Pending</span>
+            {% endif %}
+        </p>
+        <p>
+            <strong>Admin Approval:</strong>
+            {% if company.admin_approved %}
+                <span class="status-ok">Approved</span>
+            {% else %}
+                <span class="status-bad">Pending</span>
+            {% endif %}
+        </p>
+        <p>
+            <strong>Posting Eligibility:</strong>
+            {% if company.can_post %}
+                <span class="status-ok">You can post vacancies and jobs.</span>
+            {% else %}
+                <span class="status-bad">
+                    Complete email verification and await admin approval to start posting.
+                </span>
+            {% endif %}
+        </p>
+    </div>
+
+    {% if company.can_post %}
+        <div class="dashboard-actions">
+            <a href="{% url 'hub:vacancy_create' %}" class="btn-primary">+ Create New Attachment Vacancy</a>
+            <a href="{% url 'hub:job_create' %}" class="btn-ghost">+ Post Job</a>
+        </div>
+    {% endif %}
+
+    <!-- ATTACHMENT VACANCIES -->
+    <h3>Your Attachment Vacancies</h3>
+    <div class="vacancy-grid dashboard-grid">
+        {% for v in vacancies %}
+            <div class="vacancy-card">
+                <div class="vacancy-badge-row">
+                    <span class="badge-pill">Deadline: {{ v.deadline }}</span>
+                    <span class="badge-status">{{ v.verification_badge }}</span>
+                </div>
+                <h4 class="vacancy-title">{{ v.title }}</h4>
+                <p class="vacancy-snippet">{{ v.required_skills|truncatechars:90 }}</p>
+                <div class="vacancy-footer">
+                    <a href="{% url 'hub:vacancy_edit' v.pk %}" class="pill small">Edit</a>
+                    <a href="{% url 'hub:vacancy_detail' v.pk %}" class="pill small">View</a>
+                </div>
+            </div>
+        {% empty %}
+            <p class="empty-state">No vacancies yet. Start by creating your first opportunity.</p>
+        {% endfor %}
+    </div>
+
+    <!-- JOB POSTS -->
+    <h3 class="mt-4">Your Job Posts</h3>
+    {% if jobs %}
+        <div class="vacancy-grid dashboard-grid">
+            {% for job in jobs %}
+                <div class="vacancy-card">
+                    <div class="vacancy-badge-row">
+                        <span class="badge-pill">
+                            {{ job.get_job_type_display }} • {{ job.get_experience_level_display }}
+                        </span>
+                        <span class="badge-status">
+                            {% if job.is_active %}Active{% else %}Inactive{% endif %}
+                        </span>
+                    </div>
+                    <h4 class="vacancy-title">{{ job.title }}</h4>
+                    <p class="vacancy-snippet">
+                        {{ job.location }}{% if job.region %} ({{ job.region }}){% endif %}
+                        &nbsp;|&nbsp; {{ job.get_work_location_type_display }}
+                    </p>
+                    <p class="vacancy-snippet">
+                        Applicants: {{ job.applications.count }}
+                    </p>
+                    <div class="vacancy-footer">
+                        <a href="{% url 'hub:job_detail' job.pk %}" class="pill small">View Job</a>
+                        <!-- 🔴 This is the button you care about -->
+                        <a href="{% url 'hub:company_job_applicants' job.pk %}" class="pill small">
+                            View Applicants
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">No job posts yet. Use "Post Job" above to create one.</p>
+    {% endif %}
+</section>
+{% endblock %}

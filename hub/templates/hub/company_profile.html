@@ -1,0 +1,111 @@
+{% extends "hub/base.html" %}
+{% load salary_filters %} {# for salary_display (added below in section 2) #}
+{% block content %}
+<section class="section">
+  <div class="vacancy-detail">
+    <div class="vacancy-detail-header">
+      <h2>{{ company.name }}</h2>
+      <div class="badge-row">
+        {% if company.is_verified_company %}
+          <span class="badge-pill">✅ Verified Company</span>
+        {% elif company.admin_approved %}
+          <span class="badge-pill">ℹ️ Approved</span>
+        {% else %}
+          <span class="badge-pill">⚠️ Not Verified</span>
+        {% endif %}
+        {% if avg_rating %}
+          <span class="badge-status">⭐ {{ avg_rating }}/5 avg rating</span>
+        {% endif %}
+      </div>
+      <p class="vacancy-detail-meta">
+        📍 {{ company.location }}{% if company.region %}, {{ company.region }}{% endif %}
+        {% if company.website %}&nbsp;|&nbsp; 🌐 <a href="{{ company.website }}" target="_blank">Website</a>{% endif %}
+        &nbsp;|&nbsp; ✉️ {{ company.official_email }}
+      </p>
+    </div>
+
+    {% if company.map_embed_url %}
+      <div class="map-container">
+        <h3>Location Map</h3>
+        <div class="map-frame-wrapper">
+          <iframe src="{{ company.map_embed_url }}" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="tabs" style="margin-top:12px;">
+      <a href="{% url 'company_profile' company.id %}?tab=attachments" class="pill small {% if tab == 'attachments' %}active-pill{% endif %}">Attachments</a>
+      <a href="{% url 'company_profile' company.id %}?tab=jobs" class="pill small {% if tab == 'jobs' %}active-pill{% endif %}">Jobs</a>
+    </div>
+
+    {% if tab == 'jobs' %}
+      <h3 style="margin-top:10px;">Current Job Openings</h3>
+      <div class="vacancy-grid">
+        {% for j in jobs %}
+          <a href="{% url 'job_detail' j.pk %}" class="vacancy-card job-card">
+            <div class="vacancy-badge-row">
+              <span class="badge-pill">{{ j.get_work_location_type_display }}</span>
+              <span class="badge-status">{{ j.get_experience_level_display }}</span>
+            </div>
+            <h4 class="vacancy-title">{{ j.title }}</h4>
+            <p class="vacancy-meta">
+              <span>📍 {{ j.location }}{% if j.region %}, {{ j.region }}{% endif %}</span>
+              {% if j.salary_min or j.salary_max %}
+                <span>💰 {{ j|salary_display }}</span>
+              {% endif %}
+            </p>
+            <p class="vacancy-snippet">{{ j.responsibilities|default:""|truncatechars:120 }}</p>
+            <div class="vacancy-footer">
+              {% if j.easy_apply %}<span class="pill small">Easy Apply</span>{% endif %}
+              <span class="arrow">↗</span>
+            </div>
+          </a>
+        {% empty %}
+          <p class="empty-state">No active job openings.</p>
+        {% endfor %}
+      </div>
+    {% else %}
+      <h3 style="margin-top:10px;">Active Attachments</h3>
+      <div class="vacancy-grid">
+        {% for v in attachments %}
+          <a href="{% url 'vacancy_detail' v.pk %}" class="vacancy-card">
+            <div class="vacancy-badge-row">
+              <span class="badge-pill">{{ v.department }}</span>
+              <span class="badge-status">{{ v.verification_badge }}</span>
+            </div>
+            <h4 class="vacancy-title">{{ v.title }}</h4>
+            <p class="vacancy-meta">
+              <span>📍 {{ v.location }}{% if v.region %}, {{ v.region }}{% endif %}</span>
+              <span>📅 Deadline: {{ v.deadline }}</span>
+            </p>
+            <p class="vacancy-snippet">{{ v.required_skills|truncatechars:110 }}</p>
+            <div class="vacancy-footer"><span class="pill small">View details</span><span class="arrow">↗</span></div>
+          </a>
+        {% empty %}
+          <p class="empty-state">No active attachments.</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="reviews-section" style="margin-top:14px;">
+      <h3>Recent Reviews</h3>
+      {% if reviews %}
+        <div class="reviews-list">
+          {% for r in reviews %}
+            <div class="review-card">
+              <div class="review-header">
+                <strong>{{ r.name }}</strong>
+                <span class="review-rating">★ {{ r.rating }}/5</span>
+              </div>
+              <p class="review-comment">{{ r.comment }}</p>
+              <p class="review-date">{{ r.created_at|date:"M d, Y" }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-state">No reviews yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

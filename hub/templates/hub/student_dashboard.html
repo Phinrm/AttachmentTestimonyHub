@@ -1,0 +1,22 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+  <div class="section-header">
+    <h2>My Applications</h2>
+  </div>
+  <div class="vacancy-grid dashboard-grid">
+    {% for a in applications %}
+      <div class="vacancy-card">
+        <div class="vacancy-badge-row">
+          <span class="badge-pill">{{ a.job.company.name }}</span>
+          <span class="badge-status">{{ a.get_status_display }}</span>
+        </div>
+        <h4 class="vacancy-title">{{ a.job.title }}</h4>
+        <p class="vacancy-meta">Applied: {{ a.created_at|date:"M d, Y" }}</p>
+      </div>
+    {% empty %}
+      <p class="empty-state">No applications yet.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

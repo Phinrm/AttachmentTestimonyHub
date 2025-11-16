@@ -1,0 +1,71 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+  <div class="vacancy-detail">
+    <div class="vacancy-detail-header">
+      <h2>{{ job.title }}</h2>
+      <div class="badge-row">
+        <span class="badge-pill">{{ company.name }}</span>
+        <span class="badge-status">{{ job.get_job_type_display }} • {{ job.get_experience_level_display }}</span>
+      </div>
+      <p class="vacancy-detail-meta">
+        📍 {{ job.location }}{% if job.region %} ({{ job.region }}){% endif %}
+        &nbsp;|&nbsp; {{ job.get_work_location_type_display }}
+        {% if job.salary_min or job.salary_max %}
+          &nbsp;|&nbsp; 💰 {{ job.currency }} {{ job.salary_min|default:"-" }} – {{ job.salary_max|default:"-" }}
+        {% endif %}
+      </p>
+      {% if avg_rating %}<p class="vacancy-detail-meta">⭐ {{ avg_rating }}/5 average company rating</p>{% endif %}
+      {% if job.application_deadline %}
+        <p class="vacancy-detail-meta">🗓️ Application deadline: {{ job.application_deadline }}</p>
+      {% else %}
+        <p class="vacancy-detail-meta">🗓️ Open until filled</p>
+      {% endif %}
+    </div>
+
+    <div class="vacancy-detail-body">
+      {% if job.responsibilities %}
+        <h3>Key Responsibilities</h3>
+        <p>{{ job.responsibilities|linebreaks }}</p>
+      {% endif %}
+
+      {% if job.benefits %}
+        <h3>Benefits</h3>
+        <p>{{ job.benefits|linebreaks }}</p>
+      {% endif %}
+
+      <div class="apply-row" style="margin-top:1rem;">
+        {% if user.is_authenticated and user.role == 'STUDENT' %}
+          {% if job.easy_apply %}
+            <a class="btn-primary" href="{% url 'hub:job_easy_apply' job.pk %}">Easy Apply</a>
+          {% endif %}
+          {% if job.standard_apply %}
+            <a class="btn-ghost" href="{% url 'hub:job_apply_standard' job.pk %}">Full Application</a>
+          {% endif %}
+          {% if not job.easy_apply and not job.standard_apply %}
+            <span class="badge-status">Applications are not accepted online for this job.</span>
+          {% endif %}
+        {% else %}
+          {# Guest or non-student: route via login/signup with next back to the apply URL(s) #}
+          {% if job.easy_apply %}
+            <a class="btn-primary"
+               href="{% url 'login' %}?next={% url 'hub:job_easy_apply' job.pk %}">Easy Apply</a>
+          {% endif %}
+          {% if job.standard_apply %}
+            <a class="btn-ghost"
+               href="{% url 'login' %}?next={% url 'hub:job_apply_standard' job.pk %}">Full Application</a>
+          {% endif %}
+          {% if not job.easy_apply and not job.standard_apply %}
+            <span class="badge-status">Applications are not accepted online for this job.</span>
+          {% else %}
+            <p class="vacancy-detail-meta" style="margin-top:.5rem;">
+              Don’t have an account?
+              <a href="{% url 'hub:student_register' %}?next={{ request.get_full_path }}">Create a student account</a>.
+            </p>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

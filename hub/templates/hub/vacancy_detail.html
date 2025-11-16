@@ -1,0 +1,102 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+    <div class="vacancy-detail">
+        <div class="vacancy-detail-header">
+            <h2>{{ vacancy.title }}</h2>
+            <div class="badge-row">
+                <span class="badge-pill">{{ company.name }}</span>
+                <span class="badge-status">{{ vacancy.verification_badge }}</span>
+            </div>
+            <p class="vacancy-detail-meta">
+                📍 {{ vacancy.location }}{% if vacancy.region %} ({{ vacancy.region }}){% endif %}
+                &nbsp;|&nbsp; 🏢 {{ vacancy.department }}
+                &nbsp;|&nbsp; 👥 Slots: {{ vacancy.positions_available }}
+                {% if vacancy.start_date %}
+                    &nbsp;|&nbsp; 🚀 Start: {{ vacancy.start_date }}
+                {% endif %}
+            </p>
+            {% if avg_rating %}
+                <p class="vacancy-detail-meta">
+                    ⭐ {{ avg_rating }}/5 average rating from students
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="vacancy-detail-body">
+            <h3>Required Skills</h3>
+            <p>{{ vacancy.required_skills|linebreaks }}</p>
+
+            <h3>Requirements</h3>
+            <p>{{ vacancy.requirements|linebreaks }}</p>
+
+            <h3>How to Apply</h3>
+            <p>{{ vacancy.application_method }}</p>
+
+            {% if vacancy.application_link %}
+                <a href="{{ vacancy.application_link }}" target="_blank" class="btn-primary">
+                    Apply via Company Portal
+                </a>
+            {% else %}
+                <a href="mailto:{{ company.official_email }}?subject=Application - {{ vacancy.title }}" class="btn-primary">
+                    Email {{ company.official_email }}
+                </a>
+            {% endif %}
+        </div>
+
+        {% if company.map_embed_url %}
+            <div class="map-container">
+                <h3>Company Location</h3>
+                <div class="map-frame-wrapper">
+                    <iframe
+                        src="{{ company.map_embed_url }}"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="reviews-section">
+            <h3>Student Reviews & Testimonials</h3>
+            {% if reviews %}
+                <div class="reviews-list">
+                    {% for r in reviews %}
+                        <div class="review-card">
+                            <div class="review-header">
+                                <strong>{{ r.name }}</strong>
+                                <span class="review-rating">
+                                    {% for i in "12345"|slice:":r.rating"|make_list %}★{% endfor %}
+                                    {% for i in "12345"|slice:"r.rating:"|make_list %}{% endfor %}
+                                    ({{ r.rating }}/5)
+                                </span>
+                            </div>
+                            <p class="review-comment">{{ r.comment }}</p>
+                            <p class="review-date">{{ r.created_at|date:"M d, Y" }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="empty-state">No reviews yet. Be the first to share your experience with this company.</p>
+            {% endif %}
+
+            <div class="review-form-wrapper">
+                <h4>Rate this Company</h4>
+                <form method="post" action="{% url 'hub:submit_company_review' company.id %}">
+                    {% csrf_token %}
+                    {{ review_form.non_field_errors }}
+                    <div class="two-col">
+                        {{ review_form.name.label_tag }}{{ review_form.name }}
+                        {{ review_form.rating.label_tag }}{{ review_form.rating }}
+                    </div>
+                    {{ review_form.comment.label_tag }}{{ review_form.comment }}
+                    <button type="submit">Submit Review</button>
+                    <p class="review-note">Your review will be published after verification to maintain a safe and fair space.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

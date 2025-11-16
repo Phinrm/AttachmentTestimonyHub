@@ -1,0 +1,14 @@
+{% extends "hub/base.html" %}
+{% block content %}
+  <h2>Log in</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn-primary" type="submit">Log in</button>
+  </form>
+  <p class="muted">
+    New here?
+    <a href="{% url 'hub:student_register' %}">Register as Student</a> ·
+    <a href="{% url 'hub:company_register' %}">Register Company</a>
+  </p>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+  <div class="vacancy-detail">
+    <h2>Create Job Post</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Post Job</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

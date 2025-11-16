@@ -1,0 +1,69 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+  <div class="section-header">
+    <h2>Explore Jobs</h2>
+    <p>Switch between <a href="{% url 'hub:job_list' %}?mode=jobs" class="pill small {% if mode == 'jobs' %}active-pill{% endif %}">Jobs</a>
+       and <a href="{% url 'hub:vacancy_list' %}" class="pill small">Attachments</a>.</p>
+  </div>
+
+  <form method="get" class="filter-bar">
+    <input type="hidden" name="mode" value="jobs">
+    <input type="text" name="q" placeholder="Job title / department" value="{{ q }}">
+    <input type="text" name="company" placeholder="Company" value="{{ company_name }}">
+    <select name="type">
+      <option value="">Job type</option>
+      <option value="FULL_TIME" {% if type == 'FULL_TIME' %}selected{% endif %}>Full-time</option>
+      <option value="PART_TIME" {% if type == 'PART_TIME' %}selected{% endif %}>Part-time</option>
+      <option value="CONTRACT" {% if type == 'CONTRACT' %}selected{% endif %}>Contract</option>
+      <option value="FREELANCE" {% if type == 'FREELANCE' %}selected{% endif %}>Freelance</option>
+      <option value="INTERN" {% if type == 'INTERN' %}selected{% endif %}>Internship</option>
+    </select>
+    <select name="exp">
+      <option value="">Experience</option>
+      <option value="ENTRY" {% if exp == 'ENTRY' %}selected{% endif %}>Entry</option>
+      <option value="MID" {% if exp == 'MID' %}selected{% endif %}>Mid</option>
+      <option value="SENIOR" {% if exp == 'SENIOR' %}selected{% endif %}>Senior</option>
+      <option value="EXEC" {% if exp == 'EXEC' %}selected{% endif %}>Executive</option>
+    </select>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="remote" value="1" {% if remote == '1' %}checked{% endif %}>
+      Remote only
+    </label>
+    <input type="number" step="1000" name="smin" placeholder="Min salary" value="{{ smin }}">
+    <input type="number" step="1000" name="smax" placeholder="Max salary" value="{{ smax }}">
+    <button type="submit" class="btn-primary small">Filter</button>
+  </form>
+
+  <div class="vacancy-grid">
+    {% for j in jobs %}
+      <a href="{% url 'hub:job_detail' j.pk %}" class="vacancy-card job-card">
+        <div class="vacancy-badge-row">
+          <span class="badge-pill">{{ j.company.name }}</span>
+          <span class="badge-status">
+            {{ j.get_work_location_type_display }} • {{ j.get_experience_level_display }}
+          </span>
+        </div>
+        <h3 class="vacancy-title">{{ j.title }}</h3>
+        <p class="vacancy-meta">
+          <span>📍 {{ j.location }}{% if j.region %}, {{ j.region }}{% endif %}</span>
+          {% if j.salary_min or j.salary_max %}
+            <span>💰 {{ j.currency }} {{ j.salary_min|default:"-" }} – {{ j.salary_max|default:"-" }}</span>
+          {% endif %}
+        </p>
+        <p class="vacancy-snippet">
+          {{ j.responsibilities|default:""|truncatechars:110 }}
+        </p>
+        <div class="vacancy-footer">
+          {% if j.easy_apply %}
+            <span class="pill small">Easy Apply</span>
+          {% endif %}
+          <span class="arrow">↗</span>
+        </div>
+      </a>
+    {% empty %}
+      <p class="empty-state">No jobs found. Adjust your filters and try again.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,270 @@
+{% extends "hub/base.html" %}
+{% block title %}Apply — {{ job.title }} (Full Application){% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="vacancy-detail-header">
+    <h2>Apply — {{ job.title }}</h2>
+    <p class="vacancy-detail-meta">
+      {{ job.company.name }} • {{ job.get_job_type_display }} • {{ job.get_experience_level_display }}
+    </p>
+    <p class="vacancy-detail-meta">
+      {% if job.application_deadline %}🗓️ Deadline: {{ job.application_deadline }}{% else %}🗓️ Open until filled{% endif %}
+    </p>
+  </div>
+
+  <div class="apply-layout" style="display:grid;grid-template-columns:280px 1fr;gap:1.5rem;align-items:start;">
+    <!-- Left: Stepper -->
+    <aside class="apply-steps card" style="position:sticky;top:1rem;">
+      <ol id="stepper" class="clean-list" style="margin:0;padding:0;">
+        <li class="step is-active" data-step="1">1. Personal & Contact</li>
+        <li class="step" data-step="2">2. Education & Certifications</li>
+        <li class="step" data-step="3">3. Employment & References</li>
+        <li class="step" data-step="4">4. Questions</li>
+        <li class="step" data-step="5">5. Disclosures & Declarations</li>
+        <li class="step" data-step="6">6. Review & Submit</li>
+      </ol>
+      <div class="progress" style="margin-top:1rem;height:6px;background:#eee;border-radius:999px;">
+        <div id="progress-bar" style="height:6px;width:16%;border-radius:999px;"></div>
+      </div>
+    </aside>
+
+    <!-- Right: Form -->
+    <div class="card">
+      <form method="post" id="application-form">
+        {% csrf_token %}
+
+        <!-- STEP 1 -->
+        <section class="apply-step" data-step="1">
+          <h3>Personal & Contact</h3>
+          <p class="muted">Tell us how to reach you and when you’re available.</p>
+          <div class="grid-2">
+            {{ personal_form.as_p }}
+          </div>
+          <div class="step-actions">
+            <button type="button" class="btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="apply-step is-hidden" data-step="2">
+          <h3>Education</h3>
+          {{ edu_fs.management_form }}
+          <div id="edu-container" class="stack">
+            {% for f in edu_fs %}
+              <div class="card subtle formset-item">{{ f.as_p }}</div>
+            {% endfor %}
+          </div>
+          <div class="row gap">
+            <button type="button" class="pill" data-add="edu">+ Add another education</button>
+          </div>
+
+          <h3>Certifications & Licenses</h3>
+          {{ cert_fs.management_form }}
+          <div id="cert-container" class="stack">
+            {% for f in cert_fs %}
+              <div class="card subtle formset-item">{{ f.as_p }}</div>
+            {% endfor %}
+          </div>
+          <div class="row gap">
+            <button type="button" class="pill" data-add="cert">+ Add another certification</button>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-ghost" data-prev>Back</button>
+            <button type="button" class="btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="apply-step is-hidden" data-step="3">
+          <h3>Employment History</h3>
+          {{ emp_fs.management_form }}
+          <div id="emp-container" class="stack">
+            {% for f in emp_fs %}
+              <div class="card subtle formset-item">{{ f.as_p }}</div>
+            {% endfor %}
+          </div>
+          <div class="row gap">
+            <button type="button" class="pill" data-add="emp">+ Add another position</button>
+          </div>
+
+          <h3>References</h3>
+          {{ ref_fs.management_form }}
+          <div id="ref-container" class="stack">
+            {% for f in ref_fs %}
+              <div class="card subtle formset-item">{{ f.as_p }}</div>
+            {% endfor %}
+          </div>
+          <div class="row gap">
+            <button type="button" class="pill" data-add="ref">+ Add another reference</button>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-ghost" data-prev>Back</button>
+            <button type="button" class="btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- STEP 4 -->
+        <section class="apply-step is-hidden" data-step="4">
+          <h3>Additional / Custom Questions</h3>
+          {{ q_fs.management_form }}
+          <div id="q-container" class="stack">
+            {% for f in q_fs %}
+              <div class="card subtle formset-item">{{ f.as_p }}</div>
+            {% endfor %}
+          </div>
+          <div class="row gap">
+            <button type="button" class="pill" data-add="q">+ Add another question</button>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-ghost" data-prev>Back</button>
+            <button type="button" class="btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- STEP 5 -->
+        <section class="apply-step is-hidden" data-step="5">
+          <h3>Disclosures</h3>
+          <div class="grid-2">
+            <fieldset class="card subtle">
+              <legend>Criminal History (where lawful)</legend>
+              {{ crim_form.as_p }}
+            </fieldset>
+
+            <fieldset class="card subtle">
+              <legend>Referral Source</legend>
+              {{ refsrc_form.as_p }}
+            </fieldset>
+
+            <fieldset class="card subtle">
+              <legend>Voluntary EEO (not used in hiring decision)</legend>
+              {{ eeo_form.as_p }}
+            </fieldset>
+          </div>
+
+          <h3>Legal & Declarations</h3>
+          <div class="card subtle">
+            {{ decl_form.as_p }}
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn-ghost" data-prev>Back</button>
+            <button type="button" class="btn-primary" data-next>Continue</button>
+          </div>
+        </section>
+
+        <!-- STEP 6 -->
+        <section class="apply-step is-hidden" data-step="6">
+          <h3>Review & Submit</h3>
+          <p class="muted">Please review your entries. You can go back to edit any section.</p>
+
+          <div class="step-actions">
+            <button type="button" class="btn-ghost" data-prev>Back</button>
+            <button type="submit" class="btn-primary">Submit Application</button>
+          </div>
+        </section>
+      </form>
+
+      <div class="mt-4">
+        <a class="link" href="{% url 'hub:job_detail' job.pk %}">← Back to job</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Minimal CSS helpers that match your earlier utility style -->
+<style>
+  .clean-list li{list-style:none;padding:.4rem .6rem;border-radius:.6rem;cursor:pointer}
+  .clean-list li.is-active{font-weight:600;background:var(--surface-2,#f4f6f8)}
+  .apply-step.is-hidden{display:none}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .stack{display:grid;gap:.75rem}
+  .row.gap{display:flex;gap:.5rem;flex-wrap:wrap}
+  .card.subtle{background:var(--surface-1,#fafbfc)}
+  .step-actions{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1rem}
+  #progress-bar{background:var(--brand,#3b82f6);transition:width .25s ease}
+  @media(max-width:980px){.apply-layout{grid-template-columns:1fr}}
+  @media(max-width:680px){.grid-2{grid-template-columns:1fr}}
+</style>
+
+<!-- Wizard + dynamic formset adders -->
+<script>
+(function(){
+  const steps = Array.from(document.querySelectorAll('.apply-step'));
+  const stepper = Array.from(document.querySelectorAll('#stepper .step'));
+  const bar = document.getElementById('progress-bar');
+  let current = 1, maxStep = steps.length;
+
+  function show(step){
+    current = Math.min(Math.max(step,1), maxStep);
+    steps.forEach(s => s.classList.toggle('is-hidden', Number(s.dataset.step)!==current));
+    stepper.forEach(li => li.classList.toggle('is-active', Number(li.dataset.step)===current));
+    bar.style.width = (current/maxStep*100) + '%';
+    // scroll to top of form on step change (mobile convenience)
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => show(current+1)));
+  document.querySelectorAll('[data-prev]').forEach(b => b.addEventListener('click', () => show(current-1)));
+  stepper.forEach(li => li.addEventListener('click', () => show(Number(li.dataset.step))));
+
+  // --- Dynamic formset helpers ---
+  // Containers are named {prefix}-container; management TOTAL_FORMS id: id_{prefix}-TOTAL_FORMS
+  const adders = {
+    edu: {container:'#edu-container', total:'#id_edu-TOTAL_FORMS', prefix:'edu'},
+    cert:{container:'#cert-container', total:'#id_cert-TOTAL_FORMS', prefix:'cert'},
+    emp: {container:'#emp-container', total:'#id_emp-TOTAL_FORMS', prefix:'emp'},
+    ref: {container:'#ref-container', total:'#id_ref-TOTAL_FORMS', prefix:'ref'},
+    q:   {container:'#q-container',   total:'#id_q-TOTAL_FORMS',   prefix:'q'}
+  };
+
+  function cloneForm(prefix) {
+    const info = adders[prefix];
+    const container = document.querySelector(info.container);
+    const totalEl = document.querySelector(info.total);
+    if (!container || !totalEl) return;
+
+    const index = parseInt(totalEl.value, 10);
+    const last = container.querySelector('.formset-item:last-of-type');
+    const template = last ? last.cloneNode(true) : null;
+    if (!template) return;
+
+    // wipe values & renumber name/id attributes from {prefix}-X-... to {prefix}-{index}-...
+    template.querySelectorAll('input, textarea, select').forEach(el => {
+      // clear values & unchecked checkboxes
+      if (el.type === 'checkbox' || el.type === 'radio') {
+        el.checked = false;
+      } else {
+        el.value = '';
+      }
+      ['name','id','for'].forEach(attr => {
+        if (el[attr]) {
+          el[attr] = el[attr].replace(new RegExp(`${prefix}-\\d+-`,'g'), `${prefix}-${index}-`);
+        }
+      });
+    });
+
+    // Some labels' "for" attributes live in label tags
+    template.querySelectorAll('label').forEach(l => {
+      if (l.htmlFor) l.htmlFor = l.htmlFor.replace(new RegExp(`${prefix}-\\d+-`,'g'), `${prefix}-${index}-`);
+    });
+
+    container.appendChild(template);
+    totalEl.value = index + 1;
+  }
+
+  document.querySelectorAll('[data-add]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prefix = btn.getAttribute('data-add');
+      cloneForm(prefix);
+    });
+  });
+
+  // init
+  show(1);
+})();
+</script>
+{% endblock %}

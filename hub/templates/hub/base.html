@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Industrial Attachment Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Modern clean font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="{% static 'hub/css/style.css' %}">
+</head>
+<body>
+<header class="navbar">
+    <div class="nav-brand">
+        <a href="{% url 'hub:home' %}">
+
+            <span class="brand-logo">IA</span>
+            <span class="brand-text">
+                Industrial<br><strong>Attachment Hub</strong>
+            </span>
+        </a>
+    </div>
+    <nav class="nav-links">
+  <a href="{% url 'hub:vacancy_list' %}">Attachment Vacancies</a>
+  <a href="{% url 'hub:job_list' %}?mode=jobs">Jobs</a>
+  <a href="{% url 'hub:about' %}">About</a>
+
+  {% if user.is_authenticated %}
+    {# ===== Logged-in users only ===== #}
+    {% if user.role == 'STUDENT' %}
+      <a href="{% url 'hub:student_dashboard' %}">My Applications</a>
+      <a href="{% url 'hub:student_profile' %}">My Profile</a>
+    {% endif %}
+
+    {% if user.role == 'COMPANY' %}
+      <a href="{% url 'hub:company_dashboard' %}">Company Dashboard</a>
+    {% endif %}
+
+    {% if user.role == 'MODERATOR' %}
+      <a href="{% url 'hub:moderator_dashboard' %}">Moderate</a>
+    {% endif %}
+
+    {# Logout should only appear when logged in #}
+    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" class="linklike">Log out</button>
+    </form>
+  {% else %}
+    {# ===== Anonymous users only ===== #}
+    <a href="{% url 'login' %}">Log in</a>
+
+  {% endif %}
+</nav>
+</header>
+
+<!-- Hero / Banner for top pages (shows only on vacancy list & home) -->
+{% if request.resolver_match and request.resolver_match.url_name == 'home' or request.resolver_match and request.resolver_match.url_name == 'vacancy_list' %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>Connect Students with Verified Industrial Attachment Opportunities</h1>
+        <p>
+            A trusted space where companies publish short-term attachment openings
+            and students discover verified, time-bound opportunities—simple, secure, transparent.
+        </p>
+        <div class="hero-actions">
+            <a href="{% url 'hub:job_list' %}?mode=attachments" class="btn-primary">Browse Vacancies</a>
+            <a href="{% url 'hub:company_register' %}" class="btn-ghost">Register Your Company</a>
+
+        </div>
+        <div class="hero-stats">
+            <div>
+                <span class="stat-label">Verified Companies</span>
+                <span class="stat-value">Secure onboarding</span>
+            </div>
+            <div>
+                <span class="stat-label">Time-bound Posts</span>
+                <span class="stat-value">Max 14 days</span>
+            </div>
+            <div>
+                <span class="stat-label">Transparent Status</span>
+                <span class="stat-value">Verified badges</span>
+            </div>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="hero-card">
+            <p class="pill">Live Attachments</p>
+            <p class="hero-highlight">Discover roles in IT, Engineering, Business, and more—curated and verified.</p>
+        </div>
+        <div class="hero-card secondary">
+            <p>🚀 Companies reach vetted students faster.</p>
+            <p>🎓 Students find trusted openings with clear requirements.</p>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<main class="layout">
+    {% if messages %}
+        <div class="flash-wrapper">
+            {% for message in messages %}
+                <div class="flash flash-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <p>&copy; {{ now|date:"Y" }} Industrial Attachment Hub · Connecting Talent & Industry</p>
+</footer>
+
+</body>
+</html>

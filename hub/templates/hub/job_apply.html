@@ -1,0 +1,17 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+  <div class="vacancy-detail">
+    <h2>Apply: {{ job.title }}</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="checkbox-inline" style="margin:6px 0;">
+        {{ form.use_profile_cover }} {{ form.use_profile_cover.label_tag }}
+      </div>
+      {{ form.cover_letter.label_tag }}{{ form.cover_letter }}
+      <button type="submit">Submit Application</button>
+      <p class="review-note">Your resume on file (in your profile) will be attached automatically if present.</p>
+    </form>
+  </div>
+</section>
+{% endblock %}

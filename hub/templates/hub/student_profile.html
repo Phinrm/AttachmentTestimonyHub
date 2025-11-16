@@ -1,0 +1,13 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+  <div class="vacancy-detail">
+    <h2>My Profile</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Save Profile</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

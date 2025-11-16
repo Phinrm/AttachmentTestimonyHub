@@ -1,0 +1,38 @@
+{% extends "hub/base.html" %}
+{% block title %}Register as Student{% endblock %}
+{% block content %}
+<section class="auth-container">
+  <div class="auth-card">
+    <h2 class="auth-title">Create Your Student Account</h2>
+    <p class="auth-subtitle">
+      Join the Industrial Attachment Hub to apply and track your applications.
+    </p>
+
+    <form method="post" class="auth-form">
+      {% csrf_token %}
+      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+      {{ form.non_field_errors }}
+      <div class="form-fields">
+        {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <small class="help-text">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+              <small class="error-text">{{ error }}</small>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn-primary w-full">Register</button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a href="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}" class="link">Log in</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

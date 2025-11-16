@@ -1,0 +1,65 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+  <div class="section-header">
+    <h2>Moderator Panel</h2>
+    <p>Approve companies, moderate reviews, manage jobs. (No admin site access needed)</p>
+  </div>
+
+  <h3>Unapproved Companies</h3>
+  <div class="vacancy-grid dashboard-grid">
+    {% for c in unapproved_companies %}
+      <div class="vacancy-card">
+        <h4 class="vacancy-title">{{ c.name }}</h4>
+        <p class="vacancy-meta">{{ c.registration_number }} — {{ c.industry }}</p>
+        <form method="post" class="vacancy-footer">
+          {% csrf_token %}
+          <input type="hidden" name="type" value="company">
+          <input type="hidden" name="id" value="{{ c.id }}">
+          <button name="action" value="approve" class="pill small">Approve</button>
+          <button name="action" value="verify" class="pill small">Mark Verified</button>
+        </form>
+      </div>
+    {% empty %}
+      <p class="empty-state">No pending companies.</p>
+    {% endfor %}
+  </div>
+
+  <h3>Pending Reviews</h3>
+  <div class="vacancy-grid dashboard-grid">
+    {% for r in pending_reviews %}
+      <div class="vacancy-card">
+        <p class="vacancy-meta">{{ r.company.name }} — {{ r.name }} ({{ r.rating }}/5)</p>
+        <p class="vacancy-snippet">{{ r.comment|truncatechars:160 }}</p>
+        <form method="post" class="vacancy-footer">
+          {% csrf_token %}
+          <input type="hidden" name="type" value="review">
+          <input type="hidden" name="id" value="{{ r.id }}">
+          <button name="action" value="approve" class="pill small">Approve</button>
+          <button name="action" value="reject" class="pill small">Reject</button>
+        </form>
+      </div>
+    {% empty %}
+      <p class="empty-state">No pending reviews.</p>
+    {% endfor %}
+  </div>
+
+  <h3>Jobs (Quick Actions)</h3>
+  <div class="vacancy-grid dashboard-grid">
+    {% for j in pending_jobs %}
+      <div class="vacancy-card">
+        <h4 class="vacancy-title">{{ j.title }}</h4>
+        <p class="vacancy-meta">{{ j.company.name }} — {{ j.get_job_type_display }} • {{ j.get_experience_level_display }}</p>
+        <form method="post" class="vacancy-footer">
+          {% csrf_token %}
+          <input type="hidden" name="type" value="job">
+          <input type="hidden" name="id" value="{{ j.id }}">
+          <button name="action" value="deactivate" class="pill small">Deactivate</button>
+        </form>
+      </div>
+    {% empty %}
+      <p class="empty-state">No jobs found.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

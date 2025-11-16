@@ -1,0 +1,80 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section about">
+    <div class="about-hero">
+        <h1>About Industrial Attachment Hub Center</h1>
+        <p>
+            We exist to bridge the gap between ambitious students and trusted organizations
+            offering meaningful industrial attachment opportunities.
+        </p>
+    </div>
+
+    <div class="about-grid">
+        <div class="about-card">
+            <h2>Our Mission</h2>
+            <p>
+                To provide a secure, transparent, and centralized platform that connects students to
+                verified industrial attachment opportunities, ensuring every placement is credible,
+                time-bound, and aligned with real industry needs.
+            </p>
+            <h2>Our Vision</h2>
+            <p>
+                To become the leading attachment and internship gateway in the region, where every
+                student can confidently access verified openings and every company can efficiently
+                reach future talent.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <h2>The Problem We Solve</h2>
+            <p>
+                Traditional attachment searches are fragmented, unverified, and vulnerable to scams.
+                Students struggle to identify authentic opportunities, while companies lack a focused
+                channel to reach serious candidates.
+            </p>
+            <p>
+                Industrial Attachment Hub Center centralizes verified opportunities, eliminating guesswork
+                and reducing exposure to fraudulent offers.
+            </p>
+        </div>
+
+        <div class="about-card">
+            <h2>Why Students Trust Us</h2>
+            <ul>
+                <li>Centralized access to active, time-bound vacancies.</li>
+                <li>Clear requirements, deadlines, and contact methods.</li>
+                <li>“✅ Verified Company” and “Verified Vacancy” badges for transparency.</li>
+                <li>Community-driven feedback through moderated reviews and testimonials.</li>
+            </ul>
+
+            <h2>Why Companies Choose Us</h2>
+            <ul>
+                <li>Targeted visibility among serious, attachment-ready students.</li>
+                <li>Efficient posting with a strict 14-day listing policy to keep roles fresh.</li>
+                <li>Brand credibility through verification and public company profiles.</li>
+            </ul>
+        </div>
+
+        <div class="about-card">
+            <h2>Trust, Security & Verification</h2>
+            <p><strong>Security First:</strong> We prioritize authenticity and user protection.</p>
+            <p><strong>Verification:</strong> Every company goes through admin review and must provide valid details before posting.</p>
+            <p><strong>Verified Badges:</strong> Companies and vacancies that pass checks display a visible badge.</p>
+            <p><strong>Zero Tolerance for Fraud:</strong> Any suspicious activity is investigated and removed. Users are encouraged to report concerns immediately.</p>
+        </div>
+
+        <div class="about-card">
+            <h2>How It Works</h2>
+            <p><strong>For Companies:</strong> Register → Verify → Post verified attachment vacancies.</p>
+            <p><strong>For Students:</strong> Search → View details & badges → Contact companies directly via official channels.</p>
+            <h2>Contact & Next Steps</h2>
+            <p>Email: <a href="mailto:info@attachmenthub.center">info@attachmenthub.center</a></p>
+            <p>Phone: +254 700 000 000 (example)</p>
+            <p class="cta-links">
+                <a href="{% url 'hub:vacancy_list' %}" class="btn-primary">Start Browsing Vacancies</a>
+                <a href="{% url 'hub:company_register' %}" class="btn-ghost">Register Your Company</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

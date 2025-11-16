@@ -1,0 +1,48 @@
+{% extends "hub/base.html" %}
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <h2>Active Attachment Vacancies</h2>
+        <p>Browse verified opportunities from approved companies. Click a card to view details and apply directly.</p>
+    </div>
+
+    <form method="get" class="filter-bar">
+        <input type="text" name="q" placeholder="Search by role or keyword" value="{{ q }}">
+        <input type="text" name="company" placeholder="Company name" value="{{ company_name }}">
+        <label class="checkbox-inline">
+            <input type="checkbox" name="verified" value="1" {% if verified == '1' %}checked{% endif %}>
+            Verified only
+        </label>
+        <button type="submit" class="btn-primary small">Filter</button>
+    </form>
+
+    <div class="vacancy-grid">
+        {% for v in vacancies %}
+            <a href="{% url 'hub:vacancy_detail' v.pk %}" class="vacancy-card">
+                <div class="vacancy-badge-row">
+                    <span class="badge-pill">
+                        {{ v.company.name }}
+                    </span>
+                    <span class="badge-status">
+                        {{ v.verification_badge }}
+                    </span>
+                </div>
+                <h3 class="vacancy-title">{{ v.title }}</h3>
+                <p class="vacancy-meta">
+                    <span>📍 {{ v.location }}</span>
+                    <span>📅 Deadline: {{ v.deadline }}</span>
+                </p>
+                <p class="vacancy-snippet">
+                    {{ v.required_skills|truncatechars:110 }}
+                </p>
+                <div class="vacancy-footer">
+                    <span class="pill small">View details</span>
+                    <span class="arrow">↗</span>
+                </div>
+            </a>
+        {% empty %}
+            <p class="empty-state">No active vacancies at the moment. Check back soon.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

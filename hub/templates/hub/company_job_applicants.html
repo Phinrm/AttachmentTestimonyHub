@@ -1,0 +1,142 @@
+{% extends "hub/base.html" %}
+{% block title %}Applicants — {{ job.title }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="dashboard-header">
+    <h2>Applicants for {{ job.title }}</h2>
+    <p>
+      {{ job.company.name }} • {{ job.get_job_type_display }} • {{ job.get_experience_level_display }}
+    </p>
+    <p class="vacancy-detail-meta">
+      {% if job.application_deadline %}
+        🗓️ Application deadline: {{ job.application_deadline }}
+      {% else %}
+        🗓️ Open until filled
+      {% endif %}
+    </p>
+    <p>
+      <a class="link" href="{% url 'hub:company_dashboard' %}">← Back to company dashboard</a>
+    </p>
+  </div>
+
+  <!-- Simple filters (optional) -->
+  <form method="get" class="dashboard-filters mb-3">
+    <div class="filter-row">
+      <div class="form-group">
+        <label for="q">Search</label>
+        <input
+          type="text"
+          name="q"
+          id="q"
+          value="{{ q }}"
+          placeholder="Search by name, email, or cover letter">
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select name="status" id="status">
+          <option value="">All</option>
+          {% for value,label in status_choices %}
+            <option value="{{ value }}" {% if status == value %}selected{% endif %}>
+              {{ label }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>&nbsp;</label>
+        <button type="submit" class="btn-ghost small">Filter</button>
+      </div>
+    </div>
+  </form>
+
+  {% if applications %}
+    <div class="vacancy-grid dashboard-grid">
+      {% for app in applications %}
+        {% with profile=app.student.student_profile %}
+        <div class="vacancy-card">
+          <div class="vacancy-badge-row">
+            <span class="badge-pill">
+              <!-- Prefer full name from student profile, fall back to username -->
+              {% if profile.full_name %}
+                {{ profile.full_name }}
+              {% else %}
+                {{ app.student.username }}
+              {% endif %}
+            </span>
+            <span class="badge-status">
+              {{ app.get_status_display }}
+            </span>
+          </div>
+
+          <p class="vacancy-snippet">
+            <strong>Email:</strong> {{ app.student.email|default:"N/A" }}<br>
+            {% if profile.phone %}
+              <strong>Phone:</strong> {{ profile.phone }}<br>
+            {% endif %}
+            {% if profile.location %}
+              <strong>Location:</strong> {{ profile.location }}<br>
+            {% endif %}
+            <strong>Applied on:</strong> {{ app.created_at|date:"M d, Y H:i" }}
+          </p>
+
+          {% if profile.education_history %}
+            <h4 class="vacancy-title">Education</h4>
+            <p class="vacancy-snippet">
+              {{ profile.education_history|truncatechars:220|linebreaksbr }}
+            </p>
+          {% endif %}
+
+          {% if profile.work_experience %}
+            <h4 class="vacancy-title">Work Experience</h4>
+            <p class="vacancy-snippet">
+              {{ profile.work_experience|truncatechars:220|linebreaksbr }}
+            </p>
+          {% endif %}
+
+          {% if app.cover_letter %}
+            <h4 class="vacancy-title">Cover Letter</h4>
+            <p class="vacancy-snippet">
+              {{ app.cover_letter|truncatechars:300|linebreaksbr }}
+            </p>
+          {% endif %}
+
+          <div class="vacancy-footer">
+            {% if app.resume_snapshot %}
+              <!-- CV link (served via MEDIA_URL) -->
+              <a href="{{ app.resume_snapshot.url }}" class="pill small" target="_blank" rel="noopener">
+                📎 View CV
+              </a>
+            {% elif profile.resume %}
+              <!-- Fallback: CV from student profile, if you want to allow that -->
+              <a href="{{ profile.resume.url }}" class="pill small" target="_blank" rel="noopener">
+                📎 View CV (Profile)
+              </a>
+            {% else %}
+              <span class="pill small disabled">No CV uploaded</span>
+            {% endif %}
+
+            <!-- Status update inline -->
+            <form method="post" action="{% url 'hub:update_application_status' app.id %}" class="inline-form">
+              {% csrf_token %}
+              <select name="status" class="pill small">
+                {% for value,label in app.STATUS_CHOICES %}
+                  <option value="{{ value }}" {% if app.status == value %}selected{% endif %}>
+                    {{ label }}
+                  </option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="pill small">Update</button>
+            </form>
+          </div>
+        </div>
+        {% endwith %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="empty-state">No applicants yet for this job.</p>
+  {% endif %}
+</section>
+{% endblock %}
