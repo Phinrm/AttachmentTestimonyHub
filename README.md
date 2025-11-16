@@ -1,6 +1,4 @@
 
-# AttachmentTestimonyHub
-=======
 # Industrial Attachment Hub (Django)
 
 ## Features
